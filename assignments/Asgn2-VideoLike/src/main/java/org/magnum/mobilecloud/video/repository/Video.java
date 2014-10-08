@@ -1,5 +1,16 @@
 package org.magnum.mobilecloud.video.repository;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.google.common.base.Objects;
 
 /**
@@ -16,14 +27,20 @@ import com.google.common.base.Objects;
  * 
  * @author mitchell
  */
+@Entity
 public class Video {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	private String name;
 	private String url;
 	private long duration;
-	private long likes;
+	private long likes = 0;
+	
+	@ElementCollection
+	private List<String> likedBy;
 	
 	public Video() {
 	}
@@ -74,6 +91,36 @@ public class Video {
 	
 	public void setLikes(long likes) {
 		this.likes = likes;
+	}
+	
+	public List<String> getLikedBy() {
+		return likedBy;
+	}
+	
+	public void setLikedBy(List<String> likedBy) {
+		this.likedBy = likedBy;
+	}
+	
+//	public boolean userLikes(String user) {
+//		if(likedBy.contains(user))
+//			return false;
+//		else {
+//			likes++;
+//			likedBy.add(user);
+//			return true;			
+//		}
+//	}
+//	
+//	public boolean userUnlikes(String user) {
+//		if(likedBy.remove(user)) {
+//			likes--;
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	public List<String> likedBy() {
+		return likedBy;
 	}
 	
 	/**
